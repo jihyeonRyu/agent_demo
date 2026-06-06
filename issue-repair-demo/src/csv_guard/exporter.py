@@ -13,11 +13,17 @@ class Person:
 
 
 def _complete_lines(text: str):
-    """Yield newline-terminated records from a CSV payload."""
-    for line in text.splitlines(keepends=True):
-        if not line.endswith("\n"):
-            continue
-        yield line.rstrip("\n")
+    """Yield newline-terminated records from a CSV payload.
+
+    Also yields the final unterminated line if the input does not
+    end with a trailing newline, so that no data row is silently dropped.
+    """
+    lines = text.splitlines(keepends=True)
+    for line in lines:
+        if line.endswith("\n"):
+            yield line.rstrip("\n")
+        elif line:  # unterminated final line – keep it
+            yield line
 
 
 def parse_people_csv(text: str) -> list[Person]:
