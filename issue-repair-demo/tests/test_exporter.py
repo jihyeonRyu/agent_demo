@@ -3,6 +3,12 @@ from csv_guard import Person, export_people_summary, parse_people_csv
 
 SAMPLE_CSV = "name,role,region\nAda Lovelace,Engineer,UK\nGrace Hopper,Computer Scientist,US\n"
 
+CSV_NO_TRAILING_NEWLINE = (
+    "name,role,region\n"
+    "Ada Lovelace,Engineer,UK\n"
+    "Grace Hopper,Computer Scientist,US"
+)
+
 
 def test_parse_people_csv_returns_people() -> None:
     assert parse_people_csv(SAMPLE_CSV) == [
@@ -20,13 +26,6 @@ def test_export_people_summary_formats_labels() -> None:
 
 
 # ── Regression tests for missing trailing newline ──────────────────
-
-CSV_NO_TRAILING_NEWLINE = (
-    "name,role,region\n"
-    "Ada Lovelace,Engineer,UK\n"
-    "Grace Hopper,Computer Scientist,US"
-)
-
 
 def test_parse_people_csv_missing_trailing_newline() -> None:
     """parse_people_csv must not drop the last row when there is no trailing newline."""
