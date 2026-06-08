@@ -13,7 +13,7 @@ def add_business_days(start: date, days: int) -> date:
     added = 0
     while added < days:
         current += timedelta(days=1)
-        if current.weekday() < 5:  # Mon=0 .. Fri=4
+        if current.weekday() < 5:  # 0=Mon .. 4=Fri, 5=Sat, 6=Sun
             added += 1
     return current
 
