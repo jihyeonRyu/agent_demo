@@ -9,7 +9,13 @@ def add_business_days(start: date, days: int) -> date:
     if days < 0:
         raise ValueError("days must be non-negative")
 
-    return start + timedelta(days=days)
+    current = start
+    added = 0
+    while added < days:
+        current += timedelta(days=1)
+        if current.weekday() < 5:  # Mon=0 .. Fri=4
+            added += 1
+    return current
 
 
 def parse_args() -> argparse.Namespace:
